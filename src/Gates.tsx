@@ -25,19 +25,19 @@ const Gates: React.FC = () => {
         updateOutput(firstInput | secondInput);
         break;
       case 'NOT':
-        updateOutput(1 - firstInput); // NOT inverts only the first input
+        updateOutput(1 - firstInput); 
         break;
       case 'NAND':
-        updateOutput(1 - (firstInput & secondInput)); // NAND is the negation of AND
+        updateOutput(1 - (firstInput & secondInput)); 
         break;
       case 'NOR':
-        updateOutput(1 - (firstInput | secondInput)); // NOR is the negation of OR
+        updateOutput(1 - (firstInput | secondInput)); 
         break;
       case 'XOR':
-        updateOutput(firstInput ^ secondInput); // XOR for single bits
+        updateOutput(firstInput ^ secondInput); 
         break;
       case 'XNOR':
-        updateOutput(1 - (firstInput ^ secondInput)); // XNOR is the negation of XOR
+        updateOutput(1 - (firstInput ^ secondInput));
         break;
       default:
         updateOutput(0);
@@ -64,15 +64,11 @@ const Gates: React.FC = () => {
           Input 2
         </button>
       </div>
-
-      <select value={selected} onChange={changeSelected}>
-        {gates.map((gate, key) => (
-          <option key={key} value={gate}>
-            {gate}
-          </option>
-        ))}
-      </select>
-
+      {
+        gates.map((gate,key) => 
+          <button className="bg-blue-500 text-white px-4 py-2 rounded mx-1">{gate}</button>
+        )
+      }
       <div>Output: {output}</div>
     </div>
   );

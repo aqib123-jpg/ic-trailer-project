@@ -1,14 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Gates from './Gates';
+import Toolbox from './ToolBox';
+import Canvas from './Canvas';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div>
-      <Gates/>
+    <div style={{ display: 'flex' }}>
+      <Toolbox />
+      <Canvas />
     </div>
   );
-}
+};
 
 export default App;
