@@ -1,6 +1,6 @@
 import React from 'react';
-import { useDrag } from 'react-dnd';
 
+import { useDrag } from 'react-dnd';
 interface LogicGateProps {
   type: string; // Gate type: AND, OR, NOT
 }
