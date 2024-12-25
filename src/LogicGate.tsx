@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useDrag } from 'react-dnd';
 interface LogicGateProps {
-  type: string; // Gate type: AND, OR, NOT
+  type: string; 
 }
 
 const LogicGate: React.FC<LogicGateProps> = ({ type }) => {
