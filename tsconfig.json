@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+      "target": "es5",                            // Compile to ES5 for better browser compatibility
+      "lib": ["dom", "esnext"],                   // Use DOM and ESNext libraries
+      "allowJs": true,                            // Allow JavaScript files to be compiled
+      "skipLibCheck": true,                       // Skip type checking of declaration files (speeds up build)
+      "esModuleInterop": true,                    // Enable default imports from modules with no default export
+      "allowSyntheticDefaultImports": true,       // Allow default imports from modules that don't have default exports
+      "strict": true,                             // Enable all strict type-checking options
+      "forceConsistentCasingInFileNames": true,   // Ensure consistent casing for file names
+      "module": "esnext",                         // Use ESNext modules (use native imports/exports)
+      "moduleResolution": "node",                 // Use Node.js module resolution
+      "jsx": "react-jsx"                          // Enable the new JSX transform (React 17+)
+    },
+    "include": [
+      "src"                                      // Include the src folder in the compilation
+    ],
+    "exclude": [
+      "node_modules"                             // Exclude the node_modules folder
+    ]
+  }
+  
