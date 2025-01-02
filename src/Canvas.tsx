@@ -1,62 +1,3 @@
-// import React, { useState } from 'react';
-// import ReactFlow, {
-//   addEdge,
-//   Background,
-//   Node,
-//   Edge,
-//   Connection,
-// } from 'react-flow-renderer';
-
-// const initialNodes: Node[] = []; // Empty canvas initially
-// const initialEdges: Edge[] = []; // No connections initially
-
-// const Canvas: React.FC = () => {
-//   const [nodes, setNodes] = useState<Node[]>(initialNodes);
-//   const [edges, setEdges] = useState<Edge[]>(initialEdges);
-
-//   // Handles connecting nodes
-//   const onConnect = (params: Connection) => {
-//     setEdges((eds) => addEdge(params, eds));
-//   };
-
-//   // Handles drag-and-drop of logic gates
-//   const onDrop = (event: React.DragEvent<HTMLDivElement>) => {
-//     const gateType = event.dataTransfer.getData('application/reactflow');
-//     const position = {
-//       x: event.clientX,
-//       y: event.clientY,
-//     };
-
-//     const newNode: Node = {
-//       id: `${gateType}-${nodes.length + 1}`,
-//       type: 'default',
-//       position,
-//       data: { label: gateType },
-//     };
-
-//     setNodes((nds) => nds.concat(newNode));
-//   };
-
-//   return (
-//     <div style={{ width: '100%', height: '100vh', border: '1px solid black' }}>
-//       <ReactFlow
-//         nodes={nodes}
-//         edges={edges}
-//         onConnect={onConnect}
-//         onDrop={onDrop}
-//         onDragOver={(event) => event.preventDefault()} // Allow drop
-//         fitView
-//       >
-//         <Background />
-//       </ReactFlow>
-//     </div>
-//   );
-// };
-
-// export default Canvas;
-
-
-
 import React, { useState } from 'react';
 import ReactFlow, {
   Background,
@@ -66,6 +7,7 @@ import ReactFlow, {
   Edge,
   Node,
   useReactFlow,
+  ReactFlowProvider,
 } from 'react-flow-renderer';
 
 type NodeType = Node;
@@ -81,8 +23,30 @@ const Canvas: React.FC = () => {
 
   const onConnect = (params: Connection) => setEdges((eds) => addEdge(params, eds));
 
+  // Custom Node rendering
+  const customNode = ({ data }: any) => (
+    <div
+      style={{
+        border: '1px solid black',
+        padding: '10px',
+        borderRadius: '5px',
+        width: '120px',
+        textAlign: 'center',
+      }}
+    >
+      <div>{data.label}</div>
+      {data.inputs.map((input: any) => (
+        <div key={input.id}>
+          <strong>{input.label}</strong>
+        </div>
+      ))}
+    </div>
+  );
+
   const onDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
+
+    // Get the gate type from the dragged element
     const gateType = event.dataTransfer.getData('application/reactflow');
     const reactFlowBounds = event.currentTarget.getBoundingClientRect();
     const position = project({
@@ -90,11 +54,22 @@ const Canvas: React.FC = () => {
       y: event.clientY - reactFlowBounds.top,
     });
 
+    // Define inputs for different gates
+    let inputs = [];
+    if (gateType !== 'NOT') {
+      inputs = [{ id: 'input1', label: 'Input 1' }, { id: 'input2', label: 'Input 2' }];
+    } else {
+      inputs = [{ id: 'input1', label: 'Input' }];
+    }
+
     const newNode: NodeType = {
       id: `${gateType}-${nodes.length + 1}`,
-      type: 'default',
+      type: 'custom', // Use custom node type
       position,
-      data: { label: `${gateType} Gate` },
+      data: {
+        label: `${gateType} Gate`,
+        inputs: inputs, // Add inputs dynamically
+      },
     };
 
     setNodes((nds) => [...nds, newNode]);
@@ -105,7 +80,7 @@ const Canvas: React.FC = () => {
   };
 
   return (
-    <div style={{ height: '100vh', flex: 1, border: '1px solid black' }}>
+    <div style={{ height: '100vh', display: 'flex', border: '1px solid black' }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -113,8 +88,10 @@ const Canvas: React.FC = () => {
         onDrop={onDrop}
         onDragOver={onDragOver}
         fitView
+        nodesDraggable={true}  // Allow nodes to be draggable after drop
+        nodeTypes={{ custom: customNode }}  // Register custom node type
       >
-        <Background gap={10} color='#FF0000' />
+        <Background gap={10} color="#FF0000" />
         <Controls />
       </ReactFlow>
     </div>
