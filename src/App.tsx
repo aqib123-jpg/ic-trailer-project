@@ -107,7 +107,7 @@ const App: React.FC = () => {
             <LogicGateComponent key={gate.id} gate={gate} />
           ))}
         </div>
-        {/* comment for fourth januaray */}
+        {/* comment for fifth januaray */}
         {/* Drop Zone */}
         <div className="flex-1">
           <DropZone onDrop={handleDrop} />
