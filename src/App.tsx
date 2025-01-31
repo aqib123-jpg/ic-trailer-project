@@ -108,7 +108,6 @@ const App: React.FC = () => {
           ))}
         </div>
         {/* comment here twenty second januaray */}
-        {/*  */}
         <div className="flex-1">
           <DropZone onDrop={handleDrop} />
         </div>
