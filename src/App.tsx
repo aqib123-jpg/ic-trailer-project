@@ -100,7 +100,7 @@ const App: React.FC = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="flex flex-col lg:flex-row gap-4 p-4">
-        {/* Logic Gates Lis */}
+        {/* Logic Gates*/}
         <div className="flex flex-col gap-2 p-4 border rounded shadow-lg bg-white">
           <h2 className="text-xl font-bold mb-2">Logic Gates</h2>
           {gatesData.map((gate) => (
